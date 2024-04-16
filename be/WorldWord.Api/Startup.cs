@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using System.Text.RegularExpressions;
+using WorldWord.Api.Filters;
 using WorldWord.Api.Services;
 using WorldWord.Config;
 using WorldWord.Context;
 using WorldWord.Context.Interfaces;
 using WorldWord.Context.Models;
 using WorldWord.Context.Repositories;
-using Newtonsoft.Json.Converters;
 using WorldWord.DTO.Converters;
-using WorldWord.Api.Filters;
 
 namespace WorldWord.Api
 {
@@ -30,7 +30,7 @@ namespace WorldWord.Api
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue;
             });
-            
+
             services.AddSingleton(_cfg);
             services.AddScoped<WorldContext>();
             services.AddScoped<IWordRepository<Word>, WordRepository>();
@@ -57,14 +57,13 @@ namespace WorldWord.Api
                 opt.UseCamelCasing(true);
                 opt.SerializerSettings.Converters.Add(new RegionConverter());
                 opt.SerializerSettings.Converters.Add(new StringEnumConverter());
-            }); ;
-
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseStaticFiles();
-            
+
             app.UseCors(x =>
             {
                 IEnumerable<Regex> allow = _cfg.AllowedAccessToApi.Split(";").Select(x => new Regex(x));

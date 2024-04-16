@@ -10,4 +10,4 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-`npm start` in WordFe directory
+`npm start` in `word_fe` directory

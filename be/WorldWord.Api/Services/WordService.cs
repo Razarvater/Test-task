@@ -26,7 +26,7 @@ namespace WorldWord.Api.Services
         /// </summary>
         private FilterDefinition<Word> _filterByDate => Builders<Word>.Filter.Where(x => x.CreateDate == DateOnly.FromDateTime(_now.Date));
 
-        private static FilterDefinition<Word> getfilterByRegion(string regionName) => 
+        private static FilterDefinition<Word> getfilterByRegion(string regionName) =>
             Builders<Word>.Filter.Where(x => x.Region == regionName);
 
         /// <summary>
@@ -88,13 +88,13 @@ namespace WorldWord.Api.Services
             //Check if the word already has been added by email that day
             if (await buildBaseQuery().Match(x => x.Email == dto.Email).AnyAsync())
                 return null;
-           
+
             await _wordRepository.AddAsync(new Word() { Email = dto.Email, Value = dto.Value, CreateDate = DateOnly.FromDateTime(_now.Date), Region = RegionName });
 
             Task<WordGroupDTO> mostPopularInRegionTask = GetMostPopularWordAsync(RegionName);
             Task<WordGroupDTO> mostPopularInAllTask = GetMostPopularWordAsync();
-            Task<List<WordGroupDTO>> closestWordsInRegionTask = GetAllClosestWordsAsync(dto.Value, RegionName);
-            Task<List<WordGroupDTO>> closestWordsInAllTask = GetAllClosestWordsAsync(dto.Value);
+            Task<List<WordGroupDTO>> closestWordsInRegionTask = getAllClosestWordsAsync(dto.Value, RegionName);
+            Task<List<WordGroupDTO>> closestWordsInAllTask = getAllClosestWordsAsync(dto.Value);
 
             await Task.WhenAll(mostPopularInRegionTask, mostPopularInAllTask, closestWordsInRegionTask, closestWordsInAllTask);
 
@@ -103,11 +103,19 @@ namespace WorldWord.Api.Services
             List<WordGroupDTO> closestWordsInRegion = closestWordsInRegionTask.Result;
             List<WordGroupDTO> closestWordsInAll = closestWordsInAllTask.Result;
 
-            WordStatistic myRegionStats = new WordStatistic() { MostPopularWord = mostPopularInRegion, ClosestWords = closestWordsInRegion,
-                YourWord = new WordGroupDTO() { Value = dto.Value, Count = closestWordsInRegion.FirstOrDefault(x => x.Value == dto.Value)?.Count ?? 1 } };
+            WordStatistic myRegionStats = new WordStatistic()
+            {
+                MostPopularWord = mostPopularInRegion,
+                ClosestWords = closestWordsInRegion,
+                YourWord = new WordGroupDTO() { Value = dto.Value, Count = closestWordsInRegion.FirstOrDefault(x => x.Value == dto.Value)?.Count ?? 1 }
+            };
 
-            WordStatistic allRegionStats = new WordStatistic() { MostPopularWord = mostPopularInAll, ClosestWords = closestWordsInAll,
-                YourWord = new WordGroupDTO() { Value = dto.Value, Count = closestWordsInAll.FirstOrDefault(x => x.Value == dto.Value)?.Count ?? 1 } };
+            WordStatistic allRegionStats = new WordStatistic()
+            {
+                MostPopularWord = mostPopularInAll,
+                ClosestWords = closestWordsInAll,
+                YourWord = new WordGroupDTO() { Value = dto.Value, Count = closestWordsInAll.FirstOrDefault(x => x.Value == dto.Value)?.Count ?? 1 }
+            };
 
             return new AddWordResponseDTO() { Region = dto.Region.ToDTO(), MyRegionStats = myRegionStats, AllRegionStats = allRegionStats };
         }
@@ -119,7 +127,7 @@ namespace WorldWord.Api.Services
         /// <param name="searchPattern"></param>
         /// <param name="regionName"></param>
         /// <returns></returns>
-        private async Task<List<WordGroupDTO>> GetAllClosestWordsAsync(string searchPattern, string regionName = "")
+        private async Task<List<WordGroupDTO>> getAllClosestWordsAsync(string searchPattern, string regionName = "")
         {
             /*
             var regexPattern = new StringBuilder($"^((.?{searchPattern})|({searchPattern}.?)");

@@ -8,7 +8,7 @@ namespace WorldWord.Context
     public class WorldContext
     {
         private readonly IMongoClient _client;
-        private readonly  IMongoDatabase _database;
+        private readonly IMongoDatabase _database;
         public WorldContext(WorldWordConfiguration config)
         {
             DatabaseConfig cfg = config.MongoConfig;

@@ -7,7 +7,7 @@
 
         public DatabaseConfig()
         {
-            
+
         }
 
         public DatabaseConfig(string connectionString, string databaseName)

@@ -28,9 +28,9 @@ namespace WorldWord.Api.Controllers
         [Route("")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AddWordResponseDTO))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<IActionResult> AddWord([FromBody]AddWordDTO dto)
+        public async Task<IActionResult> AddWord([FromBody] AddWordDTO dto)
         {
-            if(dto.Region == null)
+            if (dto.Region == null)
                 return BadRequest(ErrorMessages.InvalidRegion);
 
             AddWordResponseDTO? result = await _wordService.AddNewWordAsync(dto);
@@ -48,7 +48,7 @@ namespace WorldWord.Api.Controllers
         [HttpPost]
         [Route("/most-popular-word-by-region")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WordGroupDTO))]
-        public async Task<IActionResult> GetMostPopularWordAsync([FromBody]RegionInfo region)
+        public async Task<IActionResult> GetMostPopularWordAsync([FromBody] RegionInfo region)
         {
             return Ok(await _wordService.GetMostPopularWordAsync(region.Name));
         }

@@ -24,8 +24,8 @@ namespace WorldWord.Config
                 if (property.PropertyType == typeof(string) || property.PropertyType.GetTypeInfo().IsPrimitive)
                 {
                     var value = Convert.ChangeType(element.Value, property.PropertyType);
-                    if(value != null)
-                    SetField(property, cfgObject, value);
+                    if (value != null)
+                        SetField(property, cfgObject, value);
                 }
                 else if (property.PropertyType == typeof(TimeSpan) || property.PropertyType == typeof(Nullable<TimeSpan>))
                 {
@@ -34,7 +34,8 @@ namespace WorldWord.Config
                     SetField(property, cfgObject, timespan);
                 }
                 else if (property.PropertyType.IsEnum)
-                {   if (element.Value == null)
+                {
+                    if (element.Value == null)
                         continue;
 
                     var value = Enum.Parse(property.PropertyType, element.Value);

@@ -10,7 +10,7 @@ namespace WorldWord.Api
             CreateHostBuilder(args).Build().Run();
 
         /// <summary>
-        /// creating <see cref="IHostBuilder"/>
+        /// Creating <see cref="IHostBuilder"/>
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
