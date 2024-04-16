@@ -1,0 +1,50 @@
+<div class="center">
+  <div *ngIf="!(response | async)">
+    <form [formGroup]="formGroup" class="word-form">
+      <mat-form-field>
+        <mat-label>Email:</mat-label>
+        <input matInput type="text" [formControlName]="formFields.Email">
+        <mat-error *ngIf="emailErrorMessage">Email was used today</mat-error>
+        <mat-error *ngIf="!emailErrorMessage">Email is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field subscriptSizing="dynamic">
+        <mat-select placeholder="not selected regions" [formControlName]="formFields.Region">
+            <mat-option *ngFor="let region of regions | async" [value]="region.name">{{region.englishName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Your word:</mat-label>
+        <input matInput type="text" [formControlName]="formFields.Value">
+        <mat-error>Word is incorrect</mat-error>
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" (click)="sendWord()" [disabled]="formGroup.invalid">Tell the whole world!</button>
+  </div>
+  <div *ngIf="response | async">
+    <div>
+      <b>Stats in your Region({{(response | async)?.region?.englishName}}):</b><br/>
+      <span>The most popular word of day: {{getFormattedStats((response | async)?.myRegionStats?.mostPopularWord?.value, (response | async)?.myRegionStats?.mostPopularWord?.count)}}</span><br/>
+      <span *ngIf="(response | async)?.myRegionStats?.yourWord?.value != (response | async)?.myRegionStats?.mostPopularWord?.value">
+        Your word stats: {{getFormattedStats((response | async)?.myRegionStats?.yourWord?.value, (response | async)?.myRegionStats?.yourWord?.count)}}</span>
+      <mat-list>
+        <div><b>Nearest words:</b></div>
+        <mat-list-item *ngFor="let word of (response | async)?.myRegionStats?.closestWords">{{getFormattedStats(word.value, word.count)}}</mat-list-item>
+        <span *ngIf="(response | async)?.myRegionStats?.closestWords?.length == 0">There are no similar words</span>
+      </mat-list>
+    </div>
+    <mat-divider></mat-divider>
+    <div>
+        <b>Stats in all world:</b><br/>
+        <span>The most popular word of day: {{getFormattedStats((response | async)?.allRegionStats?.mostPopularWord?.value, (response | async)?.allRegionStats?.mostPopularWord?.count)}}</span><br/>
+        <span *ngIf="(response | async)?.allRegionStats?.yourWord?.value != (response | async)?.allRegionStats?.mostPopularWord?.value">
+          Your word stats: {{getFormattedStats((response | async)?.allRegionStats?.yourWord?.value, (response | async)?.allRegionStats?.yourWord?.count)}}</span>
+        <mat-list>
+          <div><b>Nearest words:</b></div>
+          <mat-list-item *ngFor="let word of (response | async)?.allRegionStats?.closestWords">{{getFormattedStats(word.value, word.count)}}</mat-list-item>
+          <span *ngIf="(response | async)?.allRegionStats?.closestWords?.length == 0">There are no similar words</span>
+        </mat-list>
+    </div>
+  </div>
+</div>

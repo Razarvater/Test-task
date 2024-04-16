@@ -1,0 +1,6 @@
+When app starts collection AUTO create
+
+db.createCollection("Word");
+
+db.Word.createIndex({ CreateTime: 1, Value: 1 }, { name: "dateIndex" });
+db.Word.createIndex({ CreateDate: 1, Email: 1 }, { name: "uniqueEmailIndex", unique: true });

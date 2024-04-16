@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldWord.Api", "WorldWord.Api\WorldWord.Api.csproj", "{18764FAF-4B14-4C21-99E5-D605FEDB9F62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{735878E6-1169-4690-A0F0-C4FECB5269F0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldWord.Model", "WorldWord.Model\WorldWord.Model.csproj", "{538B24D1-6B89-423D-908A-EEC4E250DB92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18764FAF-4B14-4C21-99E5-D605FEDB9F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18764FAF-4B14-4C21-99E5-D605FEDB9F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18764FAF-4B14-4C21-99E5-D605FEDB9F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18764FAF-4B14-4C21-99E5-D605FEDB9F62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538B24D1-6B89-423D-908A-EEC4E250DB92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538B24D1-6B89-423D-908A-EEC4E250DB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538B24D1-6B89-423D-908A-EEC4E250DB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538B24D1-6B89-423D-908A-EEC4E250DB92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {595A835E-4020-40B6-8A00-3A8897F25172}
+	EndGlobalSection
+EndGlobal
