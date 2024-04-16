@@ -7,7 +7,7 @@
 
         public WorldWordConfiguration()
         {
-            
+            this.MongoConfig = new DatabaseConfig();
         }
 
         public WorldWordConfiguration(string AllowedAccessToApi, DatabaseConfig dbConfig)

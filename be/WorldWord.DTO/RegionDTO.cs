@@ -2,7 +2,7 @@
 {
     public class RegionDTO
     {
-        public string EnglishName { get; set; }
-        public string Name { get; set; }
+        public required string EnglishName { get; set; }
+        public required string Name { get; set; }
     }
 }

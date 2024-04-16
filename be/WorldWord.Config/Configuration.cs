@@ -9,11 +9,11 @@ namespace WorldWord.Config
         public static T Create<T>(IConfiguration config) where T : class, new()
         {
             T cfg = new T();
-            SetSection(cfg, config);
+            setSection(cfg, config);
             return cfg;
         }
 
-        private static void SetSection(object cfgObject, IConfiguration section)
+        private static void setSection(object cfgObject, IConfiguration section)
         {
             var properties = cfgObject.GetType().GetProperties().Where(p => !p.CustomAttributes.Any(x => x.AttributeType == typeof(NotMappedAttribute)) && (p.SetMethod != null || p.DeclaringType?.GetProperty(p.Name)?.SetMethod != null));
 
@@ -24,6 +24,7 @@ namespace WorldWord.Config
                 if (property.PropertyType == typeof(string) || property.PropertyType.GetTypeInfo().IsPrimitive)
                 {
                     var value = Convert.ChangeType(element.Value, property.PropertyType);
+                    if(value != null)
                     SetField(property, cfgObject, value);
                 }
                 else if (property.PropertyType == typeof(TimeSpan) || property.PropertyType == typeof(Nullable<TimeSpan>))
@@ -33,7 +34,9 @@ namespace WorldWord.Config
                     SetField(property, cfgObject, timespan);
                 }
                 else if (property.PropertyType.IsEnum)
-                {
+                {   if (element.Value == null)
+                        continue;
+
                     var value = Enum.Parse(property.PropertyType, element.Value);
                     if (value != null)
                         SetField(property, cfgObject, value);
@@ -41,9 +44,9 @@ namespace WorldWord.Config
                 else
                 {
                     if (property.GetValue(cfgObject) == null)
-                        SetField(property, cfgObject, Activator.CreateInstance(property.PropertyType));
+                        SetField(property, cfgObject, Activator.CreateInstance(property.PropertyType)!);
 
-                    SetSection(property.GetValue(cfgObject), section.GetSection(property.Name));
+                    setSection(property.GetValue(cfgObject)!, section.GetSection(property.Name));
                 }
 
                 if (property.GetValue(cfgObject) == null)

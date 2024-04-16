@@ -9,8 +9,8 @@ namespace WorldWord.Context.Models
         public ObjectId Id { get; set; }
 
         public DateOnly CreateDate { get; set; }
-        public string Email { get; set; }
-        public string Value { get; set; }
-        public string Region { get; set; }
+        public required string Email { get; set; }
+        public required string Value { get; set; }
+        public required string Region { get; set; }
     }
 }
