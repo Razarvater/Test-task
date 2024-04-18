@@ -120,7 +120,6 @@ namespace WorldWord.Api.Services
             return new AddWordResponseDTO() { Region = dto.Region.ToDTO(), MyRegionStats = myRegionStats, AllRegionStats = allRegionStats };
         }
 
-
         /// <summary>
         /// Gets the list of closest words
         /// </summary>

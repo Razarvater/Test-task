@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using WorldWord.Api.Converters;
 using WorldWord.DTO;
@@ -12,6 +14,13 @@ namespace WorldWord.Api.Controllers
     [ApiController]
     public class RegionController : Controller
     {
+        private static readonly ReadOnlyCollection<RegionDTO> _regions = CultureInfo.GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures)
+                .Select(x => new RegionInfo(x.Name))
+                .DistinctBy(x => x.Name)
+                .Select(x => x.ToDTO())
+                .OrderBy(x => x.EnglishName)
+                .ToList().AsReadOnly();
+
         /// <summary>
         /// Gets the list of regions
         /// </summary>
@@ -21,16 +30,7 @@ namespace WorldWord.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<RegionDTO>))]
         public IActionResult GetRegionsList()
         {
-            List<RegionDTO> regions = new List<RegionDTO>();
-
-            CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures);
-            foreach (var culture in cultures)
-            {
-                RegionInfo region = new RegionInfo(culture.Name);
-                if (!regions.Any(x => x.EnglishName == region.EnglishName))
-                    regions.Add(region.ToDTO());
-            }
-            return Ok(regions.OrderBy(x => x.EnglishName));
+            return Ok(_regions);
         }
     }
 }

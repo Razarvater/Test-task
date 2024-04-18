@@ -53,7 +53,7 @@
         </member>
         <member name="M:WorldWord.Api.Program.CreateHostBuilder(System.String[])">
             <summary>
-            creating <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>
+            Creating <see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>
             </summary>
             <param name="args"></param>
             <returns></returns>
@@ -84,7 +84,7 @@
             <param name="dto">Word, Email and Region</param>
             <returns> Stats </returns>
         </member>
-        <member name="M:WorldWord.Api.Services.WordService.GetAllClosestWordsAsync(System.String,System.String)">
+        <member name="M:WorldWord.Api.Services.WordService.getAllClosestWordsAsync(System.String,System.String)">
             <summary>
             Gets the list of closest words
             </summary>
